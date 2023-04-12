@@ -125,7 +125,7 @@ const Home = () => {
               onClick={()=>generateAction()}
               >
               {/* <div className="generate" onClick={generateAction} > */}
-                {isGenerating ? <span class="loader"></span> : <p>Generate this</p>}
+                {isGenerating ? <span class="loader"></span> : <p>Generate</p>}
               {/* </div> */}
             </button>
           </div>
