@@ -3,13 +3,20 @@ import Image from 'next/image';
 import buildspaceLogo from '../assets/buildspace-logo.png';
 const Home = () => {
   const [input, setInput] = useState('');
+  const [tonality, setTonality] = useState([])
   const [output, setOutput] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
+
+  
   const onChange = (event) => {
+    console.log(event.target.value)
     setInput(event.target.value);
   };
 
-  const generateAction = useCallback(async () => {
+  console.log(input, isGenerating)
+
+  const generateAction = async () => {
+    console.log('sdasda')
     if (isGenerating) return;
 
     setIsGenerating(true);
@@ -27,7 +34,7 @@ const Home = () => {
     );
 
     setIsGenerating(false);
-  }, [input, isGenerating]);
+  }
 
   useEffect(() => {
     const keydownHandler = async (event) => {
@@ -43,6 +50,7 @@ const Home = () => {
       window.removeEventListener('keydown', keydownHandler);
     };
   }, [generateAction]);
+
 
   return (
     <div className="root">
@@ -65,16 +73,16 @@ const Home = () => {
             <div className="or">
               <p>OR</p>
             </div>
-            <a
+            <button
               className={
                 isGenerating ? 'generate-button loading' : 'generate-button'
               }
-              onClick={generateAction}
-            >
-              <div className="generate">
-                {isGenerating ? <span class="loader"></span> : <p>Generate</p>}
-              </div>
-            </a>
+              onClick={()=>generateAction()}
+              >
+              {/* <div className="generate" onClick={generateAction} > */}
+                {isGenerating ? <span class="loader"></span> : <p>Generate this</p>}
+              {/* </div> */}
+            </button>
           </div>
         </div>
         {output && (

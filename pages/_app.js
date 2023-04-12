@@ -3,6 +3,7 @@ import './styles.css';
 
 const App = ({ Component, pageProps }) => {
   return (
+    <>
     <Head>
       <title>GPT-3 Writer | buildspace</title>
       <meta property="og:title" content="GPT-3 Writer" />
@@ -11,8 +12,9 @@ const App = ({ Component, pageProps }) => {
         property="og:image"
         content="https://cdn.buildspace.so/courses/gpt3-writer/project-og.jpg"
       />
-      <Component {...pageProps} />;
     </Head>
+      <Component {...pageProps} />
+    </>
   );
 };
 
