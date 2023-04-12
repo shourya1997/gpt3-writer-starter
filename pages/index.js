@@ -65,9 +65,6 @@ const Home = () => {
     const data = await response.json();
     // const { baseChoice, finalChoice } = data;
     const { baseChoice } = data;
-    if (baseChoice){
-      alert("Scroll Down for Output")
-    }
     setOutput(
       // `Song Titles:${finalChoice.text}\n\nLyrics:\n${input}${baseChoice.text}`
       `Your Flair:\n${baseChoice.text}`
