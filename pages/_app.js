@@ -5,7 +5,7 @@ const App = ({ Component, pageProps }) => {
   return (
     <>
     <Head>
-      <title>GPT-3 Writer | buildspace</title>
+      <title>ToneGenie</title>
       <meta property="og:title" content="GPT-3 Writer" />
       <meta property="og:description" content="build with buildspace" />
       <meta

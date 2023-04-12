@@ -414,3 +414,21 @@ body {
         transform: rotate(360deg);
     }
 }
+
+.tonality-wrapper {
+
+}
+
+.tonality-btn {
+    margin: .5rem;
+    background: black;
+    color: white;
+    border: 1px solid white;
+    padding: .5rem .8rem;
+    border-radius: 1rem;
+}
+
+.tonality-btn.active {
+    background: white;
+    color: black;
+}

@@ -1,9 +1,14 @@
 import { useCallback, useEffect, useState } from 'react';
+import classnames from 'classnames'
 import Image from 'next/image';
 import buildspaceLogo from '../assets/buildspace-logo.png';
+
+const tonalityOptions = ['happy', 'sad', 'witty', 'desperate', 'covincing']
+
 const Home = () => {
   const [input, setInput] = useState('');
-  const [tonality, setTonality] = useState([])
+  const [selectedTonality, setTonality] = useState([])
+  console.log(selectedTonality)
   const [output, setOutput] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
 
@@ -15,9 +20,39 @@ const Home = () => {
 
   console.log(input, isGenerating)
 
+  const handleTonalitySelect = (currTone) => {
+    // check if currTone exist in selectedTonality
+    const hasSelected = selectedTonality.includes(currTone)
+    let currSelected = [...selectedTonality]
+
+    if(hasSelected) {
+    // if currTone exist in selectedTonality
+    currSelected = currSelected.filter(curr => curr !== currTone)  
+
+    }else {
+      if(selectedTonality.length < 3) {
+        // if curr does not exist in selectedTonality
+        currSelected = [...currSelected, currTone]
+      }else {
+        alert("You can only select 3 tonalities")
+      }
+    
+    }
+
+    setTonality(currSelected)
+  }
+
   const generateAction = async () => {
     console.log('sdasda')
     if (isGenerating) return;
+
+    if(selectedTonality.length == 0){
+      alert("You have to choose atleast 1")
+    }
+    // if (input) && (selectedTonality.length > 0){
+    //   obj = {input: input, tonalities: selectedTonality};
+
+    // }
 
     setIsGenerating(true);
     const response = await fetch('/api/generate', {
@@ -25,12 +60,17 @@ const Home = () => {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ input }),
+      body: JSON.stringify( {input} ),
     });
     const data = await response.json();
-    const { baseChoice, finalChoice } = data;
+    // const { baseChoice, finalChoice } = data;
+    const { baseChoice } = data;
+    if (baseChoice){
+      alert("Scroll Down for Output")
+    }
     setOutput(
-      `Song Titles:${finalChoice.text}\n\nLyrics:\n${input}${baseChoice.text}`
+      // `Song Titles:${finalChoice.text}\n\nLyrics:\n${input}${baseChoice.text}`
+      `Your Flair:\n${baseChoice.text}`
     );
 
     setIsGenerating(false);
@@ -57,12 +97,20 @@ const Home = () => {
       <div className="container">
         <div className="header">
           <div className="header-title">
-            <h1>GPT-3</h1>
-            <h1>Writer</h1>
+            <h1>Tone Genie</h1>
           </div>
           <div className="header-subtitle">
-            <h2>Write your first song in the style of your favorite artist.</h2>
+            <h2>Add Flair to Your Words</h2>
           </div>
+          <div className="tonality-wrapper">
+            {tonalityOptions.map(tone => 
+            <button
+            onClick={() =>handleTonalitySelect(tone)}
+            className={
+              classnames("tonality-btn", selectedTonality.includes(tone) ? "active": "")
+              }>{tone}</button>)}
+          </div>
+
         </div>
         <div className="prompt-container">
           <textarea className="prompt-box" value={input} onChange={onChange} />

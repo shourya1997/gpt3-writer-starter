@@ -1,8 +1,7 @@
 import { Configuration, OpenAIApi } from 'openai';
 
 const configuration = new Configuration({
-  // apiKey: process.env.OPENAI_API_KEY,
-  apiKey: '',
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
@@ -27,22 +26,22 @@ const generateAction = async (req, res) => {
     console.log(e);
   }
   
-
   const baseChoice = baseCompletion.data.choices.pop();
 
   // Run second prompt with prefix
-  const finalPrompt = `${finalPromptPrefix}${req.body.input}${baseChoice.text}`;
+  // const finalPrompt = `${finalPromptPrefix}${req.body.input}${baseChoice.text}`;
 
-  const prefixCompletion = await openai.createCompletion({
-    model: 'text-davinci-003',
-    prompt: finalPrompt,
-    temperature: 0.7,
-    max_tokens: 2048,
-  });
+  // const prefixCompletion = await openai.createCompletion({
+  //   model: 'text-davinci-003',
+  //   prompt: finalPrompt,
+  //   temperature: 0.7,
+  //   max_tokens: 2048,
+  // });
 
-  const finalChoice = prefixCompletion.data.choices.pop();
+  // const finalChoice = prefixCompletion.data.choices.pop();
 
-  res.status(200).json({ baseChoice, finalChoice });
+  // res.status(200).json({ baseChoice, finalChoice });
+  res.status(200).json({ baseChoice });
 };
 
 export default generateAction;
